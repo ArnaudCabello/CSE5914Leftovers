@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-WORKDIR /flask-docker
+WORKDIR /CSE5914Leftovers
 
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
