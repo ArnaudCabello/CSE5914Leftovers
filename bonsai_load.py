@@ -27,11 +27,11 @@ import re
 # # Instantiate the new Elasticsearch connection:
 # es = Elasticsearch(es_header)
 
-es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", "6-uLg59Rby3GVMNuVQci"))
+es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", "FWDZ0*ObFet0G4RlxY+4"))
 
 
 with open("recipes-example.json") as file:
     docs = json.loads(file.read())
-    # print(docs)
+    print(docs)
     helpers.bulk(es, docs)
     
