@@ -22,11 +22,11 @@ def handleQuery(columnName):
     return query
 
 def showRecipes(docsList):
-    while True:
+    while docsList:
         print("-----Recipe List-----")
         for index, doc in enumerate (docsList):
             recipe = doc["_source"]
-            name = recipe["Name"]
+            name = recipe["name"]
             print("{}. {}".format(index + 1, name))
         print("If you would like to see more details of a recipe listed, enter the number that was listed next to it. If you want to exit, enter 0.")
         i = int(input())
@@ -38,19 +38,20 @@ def showRecipes(docsList):
 
 def sendSearch(query):
     res = es.search (index="recipe", body={"query":query})
-    print("Num hits: {}".format(len(res["hits"]["hits"])))
-    showRecipes(res["hits"]["hits"])
+    numHits = len(res["hits"]["hits"])
+    print("Num hits: {}".format(numHits))
+    if numHits > 0: showRecipes(res["hits"]["hits"])
     
 
 while(True):
     print("Welcome to our recipe searcher! Select the option you'd like to use for your search.\n"
-        "1. Exit\n2. Keywords\n3. Recipe Name")
+        "1. Exit\n2. Ingredients\n3. Recipe Name")
     i = int(input())
     query = None
     match i:
         case 1: break
-        case 2: query = handleQuery("Keywords")
-        case 3: query = handleQuery("Name")
+        case 2: query = handleQuery("ingredients")
+        case 3: query = handleQuery("name")
         case _: 
             print("Invalid number. Please try again.")
             break
