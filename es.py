@@ -1,9 +1,10 @@
 from elasticsearch import Elasticsearch, helpers
 import numpy as np
+import config
 # # Instantiate the new Elasticsearch connection:
 # es = Elasticsearch(es_header)
 
-es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", "FWDZ0*ObFet0G4RlxY+4"))
+es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", config.elastic_password))
 
 def isValidString(text):
     if text != None: return True
