@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Fridge App</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
+    <script type="text/javascript" src="{{url_for('static',filename='script/script.js')}}"></script>
+    <style>
+        body {
+            background-color: #f0f8ff; /* Light blue background color */
+            text-align: center;
+        }
+
+        .container {
+            border: 2px solid #add8e6; /* Light blue border color */
+            padding: 20px;
+            margin-top: 30px;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #ingredients, #recipe {
+            width: 80%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+    </div>
+    <div class="container">
+        <h2>What's in your fridge?</h2>
+        <label for="ingredients">Enter Ingredients:</label>
+        <input type="text" onchange="addIngredient()" id="ingredients" name="ingredients" required>
+        <br>
+        <button type="button" onclick="clearIngredients()">Clear Ingredients</button>
+        <button type="button" onclick ="generateRecipes()">Generate Recipes</button>
+        <div id="ingredientList">
+            <!-- Display entered ingredients here -->
+        </div>
+    </div>
+</body>
+</html>

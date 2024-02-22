@@ -1,0 +1,13 @@
+/* main.css */
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.banner {
+    background-color: #667FBF; /* Blue color for the banner */
+    color: #fff; /* White text color for better contrast */
+    padding: 20px;
+    text-align: center;
+}
