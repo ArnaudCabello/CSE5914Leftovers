@@ -2,6 +2,7 @@ from elasticsearch import Elasticsearch, helpers
 import os
 import json
 import re
+import config
 
 
 ### Example setup for Bonsai.io
@@ -30,7 +31,7 @@ import re
 # # Instantiate the new Elasticsearch connection:
 # es = Elasticsearch(es_header)
 
-es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", "6-uLg59Rby3GVMNuVQci"))
+es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", config.elastic_password))
 
 # DELETE ALL RECIPES
 es.delete_by_query(index="recipe", body={"query": {"match_all": {}}})

@@ -2,6 +2,7 @@ from elasticsearch import Elasticsearch, helpers
 import os
 import json
 import re
+import config
 
 # bonsai = os.environ['BONSAI_URL']
 # auth = re.search('https\:\/\/(.*)\@', bonsai).group(1).split(':')
@@ -27,10 +28,10 @@ import re
 # # Instantiate the new Elasticsearch connection:
 # es = Elasticsearch(es_header)
 
-es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", "FWDZ0*ObFet0G4RlxY+4"))
+es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", config.elastic_password))
 
 
-with open("recipes-example.json") as file:
+with open("recipes.json") as file:
     docs = json.loads(file.read())
     print(docs)
     helpers.bulk(es, docs)
