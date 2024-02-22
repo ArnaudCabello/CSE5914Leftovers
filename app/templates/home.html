@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Fridge App</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
+    <script type="text/javascript" src="{{url_for('static',filename='script/script.js')}}"></script>
     <style>
         body {
             background-color: #f0f8ff; /* Light blue background color */
@@ -13,7 +15,7 @@
         .container {
             border: 2px solid #add8e6; /* Light blue border color */
             padding: 20px;
-            margin-top: 20px;
+            margin-top: 30px;
             width: 50%;
             margin-left: auto;
             margin-right: auto;
@@ -26,31 +28,18 @@
     </style>
 </head>
 <body>
+    <div class="banner">
+    </div>
     <div class="container">
         <h2>What's in your fridge?</h2>
-        <form action="/" method="post">
-            <label for="ingredients">Enter Ingredients:</label>
-            <input type="text" id="ingredients" name="ingredients" required>
-            <br>
-            <button type="submit">Generate Recipes</button>
-            <button type="button" onclick="clearIngredients()">Clear Ingredients</button>
-        </form>
-        <div id="recipe">
-            {% if recipes %}
-                <h3>Recipes:</h3>
-                <ul>
-                    {% for recipe in recipes %}
-                        <li>{{ recipe }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+        <label for="ingredients">Enter Ingredients:</label>
+        <input type="text" onchange="addIngredient()" id="ingredients" name="ingredients" required>
+        <br>
+        <button type="button" onclick="clearIngredients()">Clear Ingredients</button>
+        <button type="button" onclick ="generateRecipes()">Generate Recipes</button>
+        <div id="ingredientList">
+            <!-- Display entered ingredients here -->
         </div>
     </div>
-
-    <script>
-        function clearIngredients() {
-            document.getElementById('ingredients').value = '';
-        }
-    </script>
 </body>
 </html>
