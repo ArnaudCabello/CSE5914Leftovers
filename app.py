@@ -1,10 +1,4 @@
-from flask import Flask
-app = Flask(__name__)
-
-@app.route('/')
-def hello_geek():
-    return '<h1>Hello from Flask & Docker & JOSIAH</h2>'
-
+from app import app
 
 if __name__ == "__main__":
     app.run(debug=True)
