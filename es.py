@@ -7,6 +7,7 @@ import config
 es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", config.elastic_password))
 
 def isValidString(text):
+    print([text])
     if text != None: return True
     return False
 
@@ -83,10 +84,13 @@ def main():
         if query != None: sendSearch(query)
     print("Thank you!")
 
+
 #This is an OR search
-query = handleShouldQuery("ingredients")
-sendSearch(query)
+#print("---OR SEARCH---")
+#query = handleShouldQuery("ingredients")
+#sendSearch(query)
 
 # This is an AND search
+print("---AND SEARCH---")
 query = handleMustQuery("ingredients")
 sendSearch(query)
