@@ -16,9 +16,33 @@ def handleInput():
         if isValidString(desiredKeyword): return desiredKeyword
         print("Invalid input. Please try again")
 
-def handleQuery(columnName):
-    desiredKeyword = handleInput()
-    query = {"match": {columnName: {"query": desiredKeyword}}}
+def handleMustQuery(columnName):
+    cont = True
+    mustTerms = list()
+    while(cont):
+        desiredKeyword = handleInput()
+        mustTerms.append({"term": {columnName: desiredKeyword}})
+        print("enter 0 to send query or 1 to continue adding terms")
+        i = int(input())
+        if i == 0: cont = False
+
+    query = {"bool": {
+                    "must":mustTerms}}
+    
+    return query
+
+def handleShouldQuery(columnName):
+    cont = True
+    mustTerms = list()
+    while(cont):
+        desiredKeyword = handleInput()
+        mustTerms.append({"term": {columnName: desiredKeyword}})
+        print("enter 0 to send query or 1 to continue adding terms")
+        i = int(input())
+        if i == 0: cont = False
+
+    query = {"bool": {"should":mustTerms}}
+    
     return query
 
 def showRecipes(docsList):
@@ -29,11 +53,11 @@ def showRecipes(docsList):
             name = recipe["name"]
             print("{}. {}".format(index + 1, name))
         print("If you would like to see more details of a recipe listed, enter the number that was listed next to it. If you want to exit, enter 0.")
-        i = int(input())
-        if i == 0: break
-        if i < 1 or i > len(docsList): print("Invalid input. Please try again.")
+        i = input()
+        if int(i) < 0 or int(i) > len(docsList): print("Invalid input. Please try again.")
+        elif int(i) == 0: break
         else:
-            print(docsList[i-1]["_source"])
+            print(docsList[int(i)-1]["_source"])
 
 
 def sendSearch(query):
@@ -42,18 +66,26 @@ def sendSearch(query):
     print("Num hits: {}".format(numHits))
     if numHits > 0: showRecipes(res["hits"]["hits"])
     
+def main():
+    while(True):
+        print("Welcome to our recipe searcher! Select the option you'd like to use for your search.\n"
+            "0. Exit\n1. Ingredients\n2. Recipe Name")
+        i = int(input())
+        query = None
+        match i:
+            case 0: break
+            case 1: query = handleMustQuery("ingredients")
+            case 2: query = handleMustQuery("name")
+            case _: 
+                print("Invalid number. Please try again.")
+                break
+        if query != None: sendSearch(query)
+    print("Thank you!")
 
-while(True):
-    print("Welcome to our recipe searcher! Select the option you'd like to use for your search.\n"
-        "1. Exit\n2. Ingredients\n3. Recipe Name")
-    i = int(input())
-    query = None
-    match i:
-        case 1: break
-        case 2: query = handleQuery("ingredients")
-        case 3: query = handleQuery("name")
-        case _: 
-            print("Invalid number. Please try again.")
-            break
-    if query != None: sendSearch(query)
-print("Thank you!")
+#This is an OR search
+query = handleShouldQuery("ingredients")
+sendSearch(query)
+
+# This is an AND search
+query = handleMustQuery("ingredients")
+sendSearch(query)
