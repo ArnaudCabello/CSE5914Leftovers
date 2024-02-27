@@ -1,6 +1,11 @@
 from app import app
 from flask import Flask, request, render_template
 from elasticsearch import Elasticsearch
+import config
+
+es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", config.elastic_password))
+cluster_info = es.info()
+print(f"Connected to ElasticSearch cluster `{cluster_info['cluster_name']}`")
 
 @app.route('/')
 def home():
@@ -11,7 +16,8 @@ def results():
     query = request.args["q"].lower()
     tokens = query.split('_')
     for token in tokens:
-        print(token)
+        res = es.search (index="recipe", body={"query": {"match": {"ingredients": token}}})
+        print(len(res["hits"]["hits"]))
     return render_template('results.html')
 
 # TODO: Delete this when you have better instructions
