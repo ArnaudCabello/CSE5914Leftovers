@@ -15,10 +15,11 @@ def home():
 def results():
     query = request.args["q"].lower()
     tokens = query.split('_')
+    data = []
     for token in tokens:
         res = es.search (index="recipe", body={"query": {"match": {"ingredients": token}}})
-        print(len(res["hits"]["hits"]))
-    return render_template('results.html')
+        data.append(res["hits"]["hits"])
+    return render_template('results.html', data=data, ingredients=tokens)
 
 # TODO: Delete this when you have better instructions
 # STEPS:
