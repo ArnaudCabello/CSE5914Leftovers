@@ -46,35 +46,37 @@
   </head>
   <body>
     <div class="banner"></div>
+
+    <!-- root page container -->
     <div class="hor-container" id="content">
+      <!-- flex container for left side of page -->
       <div class="vert-container" id="left-content">
+        <!-- Ingredients Header -->
+        <div class="hor-container"><h2>Ingredients:</h2></div>
+        <!-- Searchbar for ingredients -->
         <div class="hor-container">
           <form action="/search" method="GET">
             <input type="text" placeholder="Search..." name="q" />
             <button type="submit">Search</button>
           </form>
         </div>
-        <div class="hor-container">INGREDIENTS</div>
-        <ul>
+        <!-- Ingredients List from ingredients variable passed by views.py -->
+        <ul class="list-group">
           {% for ing in ingredients %}
-          <li>{{ ing }}</li>
+          <li class="list-group-item">{{ ing }}</li>
           {% endfor %}
         </ul>
       </div>
+
+      <!-- flex container for right side of page -->
       <div class="vert-container" id="right-content">
-        <h1>Results:</h1>
-        <ul>
+        <h2>Recipes:</h2>
+        <ul class="list-group">
           {% for item in data %} {% for result in item %}
-          <li>
-            <h4>{{ result["_source"]["name"] }}:</h4>
-            <p>Ingredients:</p>
-            <ul>
-              {% for ingredient in result["_source"]["ingredients"] %}
-              <li>{{ ingredient }}</li>
-              {% endfor %}
-            </ul>
-          </li>
-          {% endfor %} {% endfor %}
+          <a href="#" class="list-group-item-action list-group-item">
+            <h5>{{ result["_source"]["name"] }}</h5>
+            {% endfor %} {% endfor %}
+          </a>
         </ul>
       </div>
     </div>

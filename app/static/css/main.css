@@ -5,18 +5,27 @@ body {
   padding: 0;
 }
 
+.container {
+  border: 2px solid yellow;
+  border-radius: 20px;
+  margin-left: 20px;
+}
+
 .hor-container {
   display: flex;
   justify-content: space-around;
-  border: 2px solid red;
+  padding: 10px;
 }
 
 .vert-container {
   display: flex;
   flex-direction: column;
-  border: 2px solid green;
-  width: 75vh;
+  border: 2px solid rgb(173, 181, 220);
+  width: 100vh;
   height: 100vh;
+  margin: 50px 0px;
+  padding: 10px;
+  border-radius: 20px;
 }
 
 .banner {
