@@ -9,4 +9,5 @@ print(f"Connected to ElasticSearch cluster `{cluster_info['cluster_name']}`")
 if __name__ == "__main__":
     app.run(debug=True)
 
-    
+# Run this to copy the http_Ca cert from docker elastic search container.
+# docker cp es01:/usr/share/elasticsearch/config/certs/http_ca.crt .
