@@ -19,7 +19,7 @@
       src="{{url_for('static',filename='script/script.js')}}"
     ></script>
     <script>
-      var data = res;
+      //var data = res;
     </script>
     <script src="{{url_for('static', filename='/script/results.js')}}"></script>
     <style>
@@ -71,12 +71,20 @@
       <!-- flex container for right side of page -->
       <div class="vert-container" id="right-content">
         <h2>Recipes:</h2>
+        <h3> Page: {{page + 1}}</h3>
+        <div>
+            <button class="button" onclick="page = incPage()">Increment Page</button>
+            <button class="button" onclick="page = decPage()">Decrement Page</button>
+        </div>
+        
         <ul class="list-group">
+          
           {% for result in data %}
           <a href="#" class="list-group-item-action list-group-item">
             <h5>{{ result["_source"]["name"] }}</h5>
             {% endfor %}
           </a>
+
         </ul>
       </div>
     </div>

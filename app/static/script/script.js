@@ -31,3 +31,7 @@ function generateRecipes() {
     var ingredientsList = ingredients.join("_");
     window.location.href=rootPath.concat(query).concat(ingredientsList)
 }
+
+function incPage(page){
+    return page + 1
+ }

@@ -22,9 +22,7 @@ def results():
     for token in tokens:
         res = es.search (index="recipe", body={"query": {"match": {"ingredients": token}}})
         data.append(res["hits"]["hits"])
-    data = getTopTen(np.concatenate(data))
-    print(type(data[0]['_source']['name']))
-    return render_template('results.html', data=data, ingredients=tokens)
+    return render_template('results.html', data=getTopTen(np.concatenate(data)), ingredients=tokens, page=page)
 
 def getTopTen(docsList):
     return [ docsList[page*10 + i] for i in range(np.min([len(docsList) - page*10 - 1, 10]))]
