@@ -13,6 +13,7 @@ def home():
 
 @app.route('/results')
 def results():
+    print(request)
     query = request.args["q"].lower()
     tokens = query.split('_')
     data = []
