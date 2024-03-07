@@ -72,10 +72,10 @@
       <div class="vert-container" id="right-content">
         <h2>Recipes:</h2>
         <ul class="list-group">
-          {% for item in data %} {% for result in item %}
+          {% for result in data %}
           <a href="#" class="list-group-item-action list-group-item">
             <h5>{{ result["_source"]["name"] }}</h5>
-            {% endfor %} {% endfor %}
+            {% endfor %}
           </a>
         </ul>
       </div>

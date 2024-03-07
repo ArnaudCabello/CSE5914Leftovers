@@ -2,10 +2,12 @@ from app import app
 from flask import Flask, request, render_template
 from elasticsearch import Elasticsearch
 import config
+import numpy as np
 
 es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", config.elastic_password))
 cluster_info = es.info()
 print(f"Connected to ElasticSearch cluster `{cluster_info['cluster_name']}`")
+page = 0
 
 @app.route('/')
 def home():
@@ -20,7 +22,12 @@ def results():
     for token in tokens:
         res = es.search (index="recipe", body={"query": {"match": {"ingredients": token}}})
         data.append(res["hits"]["hits"])
+    data = getTopTen(np.concatenate(data))
+    print(type(data[0]['_source']['name']))
     return render_template('results.html', data=data, ingredients=tokens)
+
+def getTopTen(docsList):
+    return [ docsList[page*10 + i] for i in range(np.min([len(docsList) - page*10 - 1, 10]))]
 
 # TODO: Delete this when you have better instructions
 # STEPS:
