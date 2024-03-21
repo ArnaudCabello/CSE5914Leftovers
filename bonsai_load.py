@@ -33,6 +33,6 @@ es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=
 
 with open("recipes.json") as file:
     docs = json.loads(file.read())
-    print(docs)
+    #print(docs)
     helpers.bulk(es, docs)
     
