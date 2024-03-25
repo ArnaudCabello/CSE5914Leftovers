@@ -1,5 +1,19 @@
 # CSE5914Leftovers
 
+## How to start the Flask app with Elastic Search (updated 3/25/24)
+Prerequisites:
+  A docker container running elastic search
+  
+1. Download, pull, or clone the repository
+2. Start your docker container running elastic search
+3. run "docker cp es01:/usr/share/elasticsearch/config/certs/http_ca.crt ." in the CSE5914LEFTOVERS directory, which copies the http certification to the directory.
+4. Open config.py
+5. Copy the password from your docker container (listed under "Password for the elastic user" in the container logs).
+6. change the elastic_password variable in config.py to be this password.
+7. run app.py
+8. your app should be up and running.
+
+
 ## Quickstart with Docker
 
 Once you clone or download this repository, you will use a virtual environment (venv) and Docker to build the app, which should be viewable from your localhost and will just display a line of text for now.
