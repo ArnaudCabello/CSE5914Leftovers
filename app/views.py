@@ -7,7 +7,6 @@ import numpy as np
 es = Elasticsearch('https://localhost:9200', ca_certs="http_ca.crt", basic_auth=("elastic", config.elastic_password))
 cluster_info = es.info()
 print(f"Connected to ElasticSearch cluster `{cluster_info['cluster_name']}`")
-page = 0
 
 @app.route('/')
 def home():
@@ -16,13 +15,17 @@ def home():
 @app.route('/results')
 def results():
     print(request)
+    page = int(request.args.get("page", 1))
     query = request.args["q"].lower()
     tokens = query.split('_')
     data = []
     for token in tokens:
         res = es.search (index="recipe", body={"query": {"match": {"ingredients": token}}})
-        data.append(res["hits"]["hits"])
-    return render_template('results.html', data=getTopTen(np.concatenate(data)), ingredients=tokens, page=page)
+        data.extend(res["hits"]["hits"])
+    start_index = (page - 1) * 10
+    end_index = start_index + 10
+    paginated_data = data[start_index:end_index]
+    return render_template('results.html', data=paginated_data, ingredients=tokens, page=page)
 
 def getTopTen(docsList):
     return [ docsList[page*10 + i] for i in range(np.min([len(docsList) - page*10 - 1, 10]))]
