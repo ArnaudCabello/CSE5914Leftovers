@@ -14,10 +14,7 @@
       rel="stylesheet"
       href="{{url_for('static',filename='css/main.css')}}"
     />
-    <script
-      type="text/javascript"
-      src="{{url_for('static',filename='script/script.js')}}"
-    ></script>
+
     <script>
       //var data = res;
     </script>
@@ -71,20 +68,18 @@
       <!-- flex container for right side of page -->
       <div class="vert-container" id="right-content">
         <h2>Recipes:</h2>
-        <h3> Page: {{page + 1}}</h3>
+        <h3>Page: <span id="page-number">{{page}}</span></h3>
         <div>
-            <button class="button" onclick="page = incPage()">Increment Page</button>
-            <button class="button" onclick="page = decPage()">Decrement Page</button>
+          <button class="button" id="dec-page">Previous</button>
+          <button class="button" id="inc-page">Next</button>
         </div>
-        
+
         <ul class="list-group">
-          
           {% for result in data %}
           <a href="#" class="list-group-item-action list-group-item">
             <h5>{{ result["_source"]["name"] }}</h5>
             {% endfor %}
           </a>
-
         </ul>
       </div>
     </div>
@@ -98,5 +93,36 @@
       integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
       crossorigin="anonymous"
     ></script>
+    <script
+      type="text/javascript"
+      src="{{url_for('static',filename='script/script.js')}}"
+    ></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("inc-page")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            var currentPage = parseInt("{{ page }}") || 0;
+            if (currentPage > 0) {
+              var newPage = currentPage + 1;
+              var ingr = '{{ingredients | join("_") }}';
+              window.location.href =
+                "/results?q=" + encodeURI(ingr) + "&page=" + newPage;
+            }
+          });
+
+        document
+          .getElementById("dec-page")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            var currentPage = parseInt("{{ page }}") || 0;
+            var newPage = currentPage - 1;
+            var ingredients = '{{ ingredients | join("_") }}';
+            window.location.href =
+              "/results?q=" + encodeURI(ingredients) + "&page=" + newPage;
+          });
+      });
+    </script>
   </body>
 </html>
