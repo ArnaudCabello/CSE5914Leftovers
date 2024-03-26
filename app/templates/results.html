@@ -78,6 +78,12 @@
           {% for result in data %}
           <a href="#" class="list-group-item-action list-group-item">
             <h5>{{ result["_source"]["name"] }}</h5>
+            <script>
+              const ings = result["_source"]["ingredients"];
+              var count = 0;
+              if(ings.includes(ings[0]))
+            </script>
+            <h5>{{percent}}</h5>
             {% endfor %}
           </a>
         </ul>
