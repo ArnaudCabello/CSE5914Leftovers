@@ -1,4 +1,4 @@
-from app import app
+from app import app, dbmodels, db
 from flask import Flask, request, render_template
 from elasticsearch import Elasticsearch
 import config
@@ -26,6 +26,25 @@ def results():
     end_index = start_index + 10
     paginated_data = data[start_index:end_index]
     return render_template('results.html', data=paginated_data, ingredients=tokens, page=page)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        existing = dbmodels.User.query.filter_by(email=email).first()
+        # If the user exists, prompt for another, otherwise create
+        if existing:
+            return "Username already exists"
+        else: 
+            new_user = dbmodels.User(email=email)
+            new_user.set_hashed_password(password)
+            db.session.add(new_user)
+            db.session.commit()
+            return "Registration successful"
+        
+    return render_template('register.html')
 
 def getTopTen(docsList):
     return [ docsList[page*10 + i] for i in range(np.min([len(docsList) - page*10 - 1, 10]))]

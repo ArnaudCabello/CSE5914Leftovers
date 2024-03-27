@@ -1,2 +1,5 @@
 Flask
 elasticsearch
+numpy
+SQLAlchemy
+Werkzeug
