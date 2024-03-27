@@ -3,3 +3,4 @@ elasticsearch
 numpy
 SQLAlchemy
 Werkzeug
+Flask-Login
