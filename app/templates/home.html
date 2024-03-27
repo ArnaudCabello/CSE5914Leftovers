@@ -48,6 +48,7 @@
   </head>
   <body>
     <div class="container" id="content">
+      {% include 'navbar.html' %}
       <!-- Header -->
       <h2>What's in your fridge?</h2>
       <!-- Input space for ingredients -->
@@ -58,31 +59,38 @@
         name="ingredients"
         required
         onkeyup="addIngredient(event)"
-        
       />
       <!-- Button to clear all ingredients -->
       <button type="button" onclick="clearIngredients()">
         Clear All Ingredients
       </button>
-      
+
       <!-- Button to generate recipes -->
       <button type="button" onclick="generateRecipes()">
         Generate Recipes
       </button>
-      
-      <div class="mt-3">
-        <label class="form-check-label me-3" style="margin-bottom: 10px;">
-            <input type="checkbox" class="form-check-input" id="glutenFreeCheckbox"> Gluten Free
-        </label>
-        <label class="form-check-label" style="margin-bottom: 10px;">
-            <input type="checkbox" class="form-check-input" id="dairyFreeCheckbox"> Dairy Free
-        </label>
-    </div>
 
+      <div class="mt-3">
+        <label class="form-check-label me-3" style="margin-bottom: 10px">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="glutenFreeCheckbox"
+          />
+          Gluten Free
+        </label>
+        <label class="form-check-label" style="margin-bottom: 10px">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="dairyFreeCheckbox"
+          />
+          Dairy Free
+        </label>
+      </div>
 
       <!-- Display entered ingredients here -->
-        <ul class="list-group" id="ingredients-list">
-        </ul> 
+      <ul class="list-group" id="ingredients-list"></ul>
     </div>
   </body>
 </html>
