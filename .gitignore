@@ -1,6 +1,8 @@
 http_ca.crt
 config.py
 config.py_example.txt
-env
+env/
 recipes.json
-
+__pycache__/
+app/__pycache__/
+pyvenv.cfg
