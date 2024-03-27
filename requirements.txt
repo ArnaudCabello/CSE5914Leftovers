@@ -2,5 +2,6 @@ Flask
 elasticsearch
 numpy
 SQLAlchemy
+flask_sqlalchemy
 Werkzeug
 Flask-Login
