@@ -19,13 +19,18 @@ def results():
     page = int(request.args.get("page", 1))
     query = request.args["q"].lower()
     tokens = query.split('_')
-    data = []
-    for token in tokens:
-        res = es.search (index="recipe", body={"query": {"match": {"ingredients": token}}})
-        data.extend(res["hits"]["hits"])
+    shouldTerms = [{"term": {"ingredients": token}} for token in tokens]
+    res = es.search (index="recipe", body={"query": {"bool": {"should": shouldTerms}}})
+    data = res["hits"]["hits"]
     start_index = (page - 1) * 10
     end_index = start_index + 10
     paginated_data = data[start_index:end_index]
+
+    # include the percent of ingredients matching in the data
+    for i, result in enumerate(paginated_data):
+        count = np.sum([1 if tokens.count(ingredient) > 0 else 0 for ingredient in  result["_source"]["ingredients"]])
+        paginated_data[i] = (result, np.round(count * 100 / len(result["_source"]["ingredients"]), 2))
+    
     return render_template('results.html', data=paginated_data, ingredients=tokens, page=page)
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -83,9 +88,6 @@ def logout():
 @login_required
 def profile():
     return render_template('profile.html')
-
-def getTopTen(docsList):
-    return [ docsList[page*10 + i] for i in range(np.min([len(docsList) - page*10 - 1, 10]))]
 
 # TODO: Delete this when you have better instructions
 # STEPS:
