@@ -67,7 +67,7 @@
 
         <ul class="list-group">
           {% for result, percent in data %}
-          <a href="#" class="list-group-item-action list-group-item">
+          <a href="{{ url_for('recipe', recipe_id=result['_id']) }}" class="list-group-item-action list-group-item">
             <h5>{{ result["_source"]["name"] }} - {{percent}}%</h5>
             {% endfor %}
           </a>
