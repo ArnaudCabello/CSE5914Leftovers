@@ -1,18 +1,72 @@
-/* main.css */
+/* main.css for global classes */
+:root {
+  --primary-clr: #f9f7f7;
+  --secondary-clr: rgb(213, 221, 231);
+  --accent-clr: #3f72af;
+  --accent2-clr: #112d4e;
+  --txt-blue: #3f72af;
+}
+
+body {
+  text-align: center;
+  background: var(--primary-clr);
+}
+
+.container {
+  min-height: 50vh;
+}
+
+.module {
+  background: var(--secondary-clr);
+  border: 2px solid var(--primary-bg-subtle);
+}
+
+.inner-module {
+  background: var(--primary-clr);
+}
+
+.btn1 {
+  /* Here I want to invoke bootstrap utility classes such as .d-flex and .mt-3*/
+}
+
+/*
+.container {
+  border: 2px solid #add8e6; 
+  padding: 20px;
+  margin-top: 30px;
+  width: 50%;
+  height: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+
+#ingredients,
+#recipe {
+  width: 80%;
+  margin-top: 10px;
+}
+
+button {
+  margin: 20px;
+}
 
 .nav-container {
   margin: auto;
 }
 
 body {
+  background-color: var(--primary-clr);
   margin: 0;
   padding: 0;
+  color: var(--accent2-clr);
 }
 
 .container {
   border: 2px solid yellow;
   border-radius: 20px;
   margin-left: 20px;
+  background-color: var(--secondary-clr);
 }
 
 .hor-container {
@@ -33,12 +87,12 @@ body {
 }
 
 .banner {
-  background-color: #667fbf; /* Blue color for the banner */
-  color: #fff; /* White text color for better contrast */
+  background-color: #667fbf; 
+  color: #fff; 
   padding: 20px;
   text-align: center;
 }
 
 .button {
   background-color: #fff;
-}
+} */

@@ -9,7 +9,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <title>Hello World</title>
+    <title>Recipes</title>
     <link
       rel="stylesheet"
       href="{{url_for('static',filename='css/main.css')}}"
@@ -19,35 +19,30 @@
       //var data = res;
     </script>
     <script src="{{url_for('static', filename='/script/results.js')}}"></script>
-    <style>
-      body {
-        background-color: #f0f8ff; /* Light blue background color */
-        text-align: center;
-      }
-
-      #ingredients,
-      #recipe {
-        width: 80%;
-        margin-top: 10px;
-      }
-    </style>
+    <style></style>
   </head>
   <body>
     <div class="nav-container">{% include 'navbar.html' %}</div>
 
     <!-- root page container -->
-    <div class="hor-container" id="content">
+    <div
+      class="container rounded border border-primary d-flex module m-5 p-3"
+      id="content"
+    >
       <!-- flex container for left side of page -->
-      <div class="vert-container" id="left-content">
+      <div class="container" id="left-content">
         <!-- Ingredients Header -->
-        <div class="hor-container"><h2>Ingredients:</h2></div>
+        <div class=""><h2>Ingredients</h2></div>
         <!-- Searchbar for ingredients -->
-        <div class="hor-container">
+        <div class="">
           <form action="/search" method="GET">
-            <input type="text" placeholder="Search..." name="q" />
-            <button type="submit">Search</button>
+            <div class="d-flex flex-row justify-content-evenly">
+              <input class="form-control w-50" type="text" placeholder="Search..." name="q" />
+              <button class="btn btn-primary " type="submit">Search</button>
+            </div>
           </form>
         </div>
+        <br />
         <!-- Ingredients List from ingredients variable passed by views.py -->
         <ul class="list-group">
           {% for ing in ingredients %}
@@ -57,13 +52,14 @@
       </div>
 
       <!-- flex container for right side of page -->
-      <div class="vert-container" id="right-content">
-        <h2>Recipes:</h2>
-        <h3>Page: <span id="page-number">{{page}}</span></h3>
+      <div class="container" id="right-content">
+        <h2>Recipes</h2>
+        <h6>Page <span id="page-number">{{page}}</span></h3>
         <div>
-          <button class="button" id="dec-page">Previous</button>
-          <button class="button" id="inc-page">Next</button>
+          <button class="btn btn-primary" id="dec-page">Previous</button>
+          <button class="btn btn-primary" id="inc-page">Next</button>
         </div>
+        <br />
 
         <ul class="list-group">
           {% for result, percent in data %}
