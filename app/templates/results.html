@@ -26,50 +26,73 @@
 
     <!-- root page container -->
     <div
-      class="container rounded border border-primary d-flex module m-5 p-3"
+      class="container module rounded border border-primary m-5 p-3 "
       id="content"
     >
-      <!-- flex container for left side of page -->
-      <div class="container" id="left-content">
+      <!-- Container for Recipe and Ingredient headers -->
+      <div class=" container d-flex">
         <!-- Ingredients Header -->
-        <div class=""><h2>Ingredients</h2></div>
-        <!-- Searchbar for ingredients -->
-        <div class="">
-          <form action="/search" method="GET">
-            <div class="d-flex flex-row justify-content-evenly">
-              <input class="form-control w-50" type="text" placeholder="Search..." name="q" />
-              <button class="btn btn-primary " type="submit">Search</button>
-            </div>
-          </form>
-        </div>
+        <div class="container-sm ">
+          <h2>Ingredients</h2>
+          <!-- Searchbar for ingredients -->
+          <div>
+            <form action="/search" method="GET">
+              <div class="d-flex flex-row justify-content-evenly">
+                <input
+                  class="form-control w-50"
+                  type="text"
+                  placeholder="Search..."
+                  name="q"
+                />
+                <button class="btn btn-primary" type="submit">Search</button>
+              </div>
+            </form>
+          </div>
+
+          <!--  container for left side of page -->
+      <div class="mt-4 white-module rounded border border-primary min-vh-100" id="left-content">
         <br />
         <!-- Ingredients List from ingredients variable passed by views.py -->
         <ul class="list-group">
           {% for ing in ingredients %}
-          <li class="list-group-item">{{ ing }}</li>
+          <li class="list-group-item"><h5>{{ ing }}</h5></li>
           {% endfor %}
         </ul>
       </div>
 
-      <!-- flex container for right side of page -->
-      <div class="container" id="right-content">
-        <h2>Recipes</h2>
-        <h6>Page <span id="page-number">{{page}}</span></h3>
-        <div>
-          <button class="btn btn-primary" id="dec-page">Previous</button>
-          <button class="btn btn-primary" id="inc-page">Next</button>
         </div>
-        <br />
 
-        <ul class="list-group">
-          {% for result, percent in data %}
-          <a href="#" class="list-group-item-action list-group-item">
-            <h5>{{ result["_source"]["name"] }} - {{percent}}%</h5>
-            {% endfor %}
-          </a>
-        </ul>
+        <!-- Recipes Header -->
+        <div class="container">
+          <h2>Recipes</h2>
+          <div class="m-3 d-flex flex-row justify-content-evenly">
+            <h5>Page <span id="page-number">{{page}}</span></h3>
+              <div>
+                <button class="btn btn-primary" id="dec-page">Previous</button>
+              </div>
+              <div>
+                <button class="btn btn-primary" id="inc-page">Next</button>
+              </div>
+          </div>
+          
+          <!-- flex container for right side of page -->
+      <div class=" rounded bg-white min-vh-100 border border-primary" id="right-content">
+          <ul class="list-group">
+            {% for result, percent in data %}
+            <a href="#" class="list-group-item-action list-group-item">
+              <h5>{{ result["_source"]["name"] }} - {{percent}}%</h5>
+              {% endfor %}
+            </a>
+          </ul>
       </div>
     </div>
+
+        </div>
+      </div>
+
+      
+
+      
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

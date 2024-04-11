@@ -18,81 +18,13 @@ body {
 
 .module {
   background: var(--secondary-clr);
-  border: 2px solid var(--primary-bg-subtle);
 }
 
 .inner-module {
-  background: var(--primary-clr);
+  /* background: var(--primary-clr); */
+  background: white;
 }
 
-.btn1 {
-  /* Here I want to invoke bootstrap utility classes such as .d-flex and .mt-3*/
+.white-module {
+  background: white;
 }
-
-/*
-.container {
-  border: 2px solid #add8e6; 
-  padding: 20px;
-  margin-top: 30px;
-  width: 50%;
-  height: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 20px;
-}
-
-#ingredients,
-#recipe {
-  width: 80%;
-  margin-top: 10px;
-}
-
-button {
-  margin: 20px;
-}
-
-.nav-container {
-  margin: auto;
-}
-
-body {
-  background-color: var(--primary-clr);
-  margin: 0;
-  padding: 0;
-  color: var(--accent2-clr);
-}
-
-.container {
-  border: 2px solid yellow;
-  border-radius: 20px;
-  margin-left: 20px;
-  background-color: var(--secondary-clr);
-}
-
-.hor-container {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-}
-
-.vert-container {
-  display: flex;
-  flex-direction: column;
-  border: 2px solid rgb(173, 181, 220);
-  width: 100vh;
-  height: 100vh;
-  margin: 50px 0px;
-  padding: 10px;
-  border-radius: 20px;
-}
-
-.banner {
-  background-color: #667fbf; 
-  color: #fff; 
-  padding: 20px;
-  text-align: center;
-}
-
-.button {
-  background-color: #fff;
-} */
