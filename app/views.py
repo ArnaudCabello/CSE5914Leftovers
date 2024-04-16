@@ -89,6 +89,14 @@ def logout():
 def profile():
     return render_template('profile.html')
 
+# Individual Recipe Pages
+@app.route('/recipe/<recipe_id>')
+def recipe(recipe_id):
+    # Your logic to retrieve a specific recipe by its ID
+    recipe_details = es.get(index="recipe", id=recipe_id)
+    return render_template('recipe.html', recipe=recipe_details)
+
+
 # TODO: Delete this when you have better instructions
 # STEPS:
 # 1. start elasticsearch cluster
