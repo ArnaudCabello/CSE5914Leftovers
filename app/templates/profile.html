@@ -8,12 +8,12 @@
     <body>
         <h1>User Profile</h1>
         <h2>Email: {{ current_user.email }}</h2>
+        <h2>Favorited Recipes</h2>
         <ul>
-            <li>First Name: {{ current_user.first_name }}</li>
-            <li>Last Name: {{ current_user.last_name }}</li>
-            <li>Phone Number: {{ current_user.phone_number }}</li>
+            {% for recipe in favorited_recipes %}
+                <li>{{ recipe.name }}</li>
+            {% endfor %}
         </ul>
-
         <!-- Logout Button -->
         <form action="{{ url_for('logout') }}" method="post">
             <button type="submit">Logout</button>
