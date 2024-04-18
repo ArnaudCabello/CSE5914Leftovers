@@ -2,13 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>{{ recipe['_source']['name'] }}</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script type="text/javascript" src="{{url_for('static',filename='script/script.js')}}"></script>
     <script> //var data = res; </script>
     <script src="{{url_for('static', filename='/script/results.js')}}"></script>
     <script src="{{url_for('static', filename='/script/recipe.js')}}"></script>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='css/main.css')}}"
+    />
+
     <style>
       body {
         background-color: #f0f8ff; /* Light blue background color */
@@ -19,69 +24,54 @@
         border: 2px solid #add8e6; /* Light blue border color */
         padding: 20px;
         margin-top: 30px;
-        width: 50%;
+        width: 100%;
         margin-left: auto;
         margin-right: auto;
       }
-
-      #ingredients,
-      #recipe {
-        width: 80%;
-        margin-top: 10px;
+      .jumbotron{
+        background-color: #f0f8ff;
       }
+
     </style>
   </head>
   <body>
-    <div class="banner"></div>
-
-    <h1 style="text-align: center;">{{ recipe['_source']['name'] }}</h1>
-    <div class="hor-container" id="content"> <!-- root page container -->
-      <div class="vert-container" id="left-content"> <!-- flex container for left side of page -->
-        <div class="hor-container"><h2>Ingredients:</h2></div> <!-- Ingredients Header -->
-        <div class="hor-container"> <!-- Description of recipe -->
-          <h2>Description:</h2>
-          <p>{{ recipe['_source']['description'] }}</p>
-        </div>
-        <div class="hor-container">
-          <div class="ingredients-container">
-            <h2>Ingredients List:</h2>
-            <ul>
-              {% for ingredient in recipe['_source']['ingredients'] %}
-                <li>{{ ingredient }}</li>
+    <div class="container">
+      
+        <div class="jumbotron">
+            <h1 class="display-4"><strong>{{ recipe['_source']['name'] }}</strong></h1>
+            <p class="lead">
+              {% for tag in recipe['_source']['tags'] %}
+                {% if '-hours-or-less' in tag or '-minutes-or-less' in tag %}
+                  Time: {{ tag }}
+                {% endif %}
               {% endfor %}
-            </ul>
-          </div>
-          <div class="ingredients-raw-container">
-            <h2>Ingredients Raw String:</h2>
-            <ul>
-            {% for ingredient in recipe['_source']['ingredients_raw_str'] %}
-              <li>{{ ingredient }}</li>
-            {% endfor %}
-            </ul>
-          </div>
+            </p>
+            <p class="lead">Serving Size: {{ recipe['_source']['serving_size'] }}</p>
         </div>
-        <div class="hor-container">
-          <div class="servings-container">
-            <h4>Servings: {{ recipe['_source']['servings'] }}</h4>
-          </div>
-          <div class="serving-size-container">
-            <h4>Serving Size: {{ recipe['_source']['serving_size'] }}</h4>
-          </div>
+    
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Ingredients</h2>
+                <ul class="list-group">
+                    {% for ingredient in recipe['_source']['ingredients_raw_str'] %}
+                        <li class="list-group-item">{{ ingredient }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h2>Directions</h2>
+                <ol class="list-group">
+                    {% for step in recipe['_source']['steps'] %}
+                        <li class="list-group-item">{{ step }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
         </div>
-      </div>
-
-      <div class="vert-container" id="right-content"> <!-- flex container for right side of page -->
-        <h2>Steps:</h2>
-        <div>
-          <ol>
-            {% for step in recipe['_source']['steps'] %}
-              <li>{{ step }}</li>
-            {% endfor %}
-          </ol>
-        </div>
-        </ul>
-      </div>
     </div>
-  </body>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
 </html>
 
