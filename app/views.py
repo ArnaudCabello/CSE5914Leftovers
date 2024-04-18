@@ -15,7 +15,6 @@ def home():
 
 @app.route('/results')
 def results():
-    print(request)
     filter = request.args.get("filter", None)
     page = int(request.args.get("page", 1))
     query = request.args["q"].lower()
@@ -29,15 +28,25 @@ def results():
     filterTerms = [{"term": {"tags.keyword": tag}} for tag in tags]
     res = es.search (index="recipe", body={"query": {"bool": {"should": shouldTerms, "filter": filterTerms}}})
     data = res["hits"]["hits"]
-    start_index = (page - 1) * 10
-    end_index = start_index + 10
-    paginated_data = data[start_index:end_index]
+    
+    indexedData = np.zeros((100, 2))
 
     # include the percent of ingredients matching in the data
-    for i, result in enumerate(paginated_data):
-        count = np.sum([1 if tokens.count(ingredient) > 0 else 0 for ingredient in  result["_source"]["ingredients"]])
-        paginated_data[i] = (result, np.round(count * 100 / len(result["_source"]["ingredients"]), 2))
+    for i, result in enumerate(data):
+        recipeIngs = result["_source"]["ingredients"]
+        count = np.sum([1 if tokens.count(ingredient) > 0 else 0 for ingredient in  recipeIngs])
+        indexedData[i] = [np.round(count * 100 / len(recipeIngs), 2), i]
+    sortedData = np.flip(np.sort(indexedData, axis=0), 0)
+
+    start_index = (page - 1) * 10
+    end_index = start_index + 10
     
+    # Get paginated data
+    paginated_data = list()
+    for idx in range(start_index, end_index + 1):
+        value, dataIdx = sortedData[idx]
+        result = data[int(dataIdx)]
+        paginated_data.append((result, value))
     return render_template('results.html', data=paginated_data, ingredients=tokens, filters=tags, page=page)
 
 @app.route('/register', methods=['GET', 'POST'])
