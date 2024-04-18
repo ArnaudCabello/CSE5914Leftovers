@@ -34,20 +34,7 @@
         <!-- Ingredients Header -->
         <div class="container-sm ">
           <h2>Ingredients</h2>
-          <!-- Searchbar for ingredients -->
-          <div>
-            <form action="/search" method="GET">
-              <div class="d-flex flex-row justify-content-evenly">
-                <input
-                  class="form-control w-50"
-                  type="text"
-                  placeholder="Search..."
-                  name="q"
-                />
-                <button class="btn btn-primary" type="submit">Search</button>
-              </div>
-            </form>
-          </div>
+          <br>
 
           <!--  container for left side of page -->
       <div class="mt-4 white-module rounded border border-primary min-vh-100" id="left-content">
@@ -129,13 +116,21 @@
           .addEventListener("click", function (e) {
             e.preventDefault();
             var currentPage = parseInt("{{ page }}") || 0;
-            var newPage = currentPage - 1;
-            var ingredients = '{{ ingredients | join("_") }}';
-            var filt = '{{filters | join("_") }}';
-            window.location.href =
-              "/results?q=" + encodeURI(ingredients) + "&filter=" + encodeURI(filt) + "&page=" + newPage;
-          });
-      });
+            if (currentPage > 1) { // Check if current page is greater than 1
+        var newPage = currentPage - 1;
+        var ingredients = '{{ ingredients | join("_") }}';
+        var filt = '{{filters | join("_") }}';
+        window.location.href =
+          "/results?q=" + encodeURI(ingredients) + "&filter=" + encodeURI(filt) + "&page=" + newPage;
+      }
+    });
+
+  // Disable previous button if current page is 1
+  var currentPage = parseInt("{{ page }}") || 0;
+  if (currentPage === 1) {
+    document.getElementById("dec-page").disabled = true;
+  }
+});
     </script>
   </body>
 </html>
