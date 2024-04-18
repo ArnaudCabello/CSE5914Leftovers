@@ -42,12 +42,28 @@ function clearIngredients() {
 function generateRecipes() {
     // You can redirect to the results page here
     var filters = new Array();
-    if(document.getElementById('glutenFreeCheckbox').checked){
+    if(document.getElementById('glutenFreeCheckbox').checked)
         filters.push("gluten-free")
-    }
-    if(document.getElementById('dairyFreeCheckbox').checked){
+    if(document.getElementById('dairyFreeCheckbox').checked)
         filters.push("dairy-free")
-    }
+    if(document.getElementById('vegetarianCheckbox').checked)
+        filters.push("vegetarian")
+    if(document.getElementById('veganCheckbox').checked)
+        filters.push("vegan")
+    if(document.getElementById('kosherCheckbox').checked)
+        filters.push("kosher")
+    if(document.getElementById('lowCalCheckbox').checked)
+        filters.push("low-calorie")
+    if(document.getElementById('lowCarbCheckbox').checked)
+        filters.push("low-carb")
+    if(document.getElementById('lowFatCheckbox').checked)
+        filters.push("low-fat")
+    if(document.getElementById('lowSodiumCheckbox').checked)
+        filters.push("low-sodium")
+    if(document.getElementById('lowCholesterolCheckbox').checked)
+        filters.push("low-cholesterol")
+    if(document.getElementById('highProteinCheckbox').checked)
+        filters.push("high-protein")
 
     var rootPath = '/results';
     var query = '?q=';
