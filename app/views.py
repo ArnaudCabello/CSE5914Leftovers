@@ -1,6 +1,6 @@
 from app import app, dbmodels, db, login_manager
 from flask import Flask, request, render_template, redirect, url_for, flash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from elasticsearch import Elasticsearch
 import config
 import numpy as np
@@ -55,7 +55,10 @@ def register():
             new_user.set_hashed_password(password)
             db.session.add(new_user)
             db.session.commit()
-            return "Registration successful"
+
+            login_user(new_user)
+
+            return redirect(url_for('profile'))
         
     return render_template('register.html')
 
@@ -94,14 +97,36 @@ def logout():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html')
+    favorited_recipes = dbmodels.get_favorited_recipes(current_user.id)
+    return render_template('profile.html', favorited_recipes=favorited_recipes)
+
+# Add recipe to favorites
+@app.route('/recipe/<recipe_id>/favorite', methods=['GET', 'POST'])
+@login_required
+def add_favorite(recipe_id):
+    recipe = es.get(index="recipe", id=recipe_id)
+    print(recipe)
+    if recipe:
+        dbmodels.FavoriteRecipes.add_favorite(current_user, recipe['_id'], recipe['_source']['name'])
+    return redirect(url_for('profile'))
+
+@app.route('/recipe/<recipe_id>/unfavorite', methods=['GET', 'POST'])
+@login_required
+def remove_favorite(recipe_id):
+    recipe = es.get(index="recipe", id=recipe_id)
+    if recipe:
+        dbmodels.FavoriteRecipes.remove_favorite(current_user, recipe['_id'])
+    return redirect(url_for('profile'))
 
 # Individual Recipe Pages
 @app.route('/recipe/<recipe_id>')
 def recipe(recipe_id):
+
+    is_favorited = dbmodels.check_if_favorited(current_user, recipe_id)
+
     # Your logic to retrieve a specific recipe by its ID
     recipe_details = es.get(index="recipe", id=recipe_id)
-    return render_template('recipe.html', recipe=recipe_details)
+    return render_template('recipe.html', recipe=recipe_details, is_favorited = is_favorited)
 
 
 # TODO: Delete this when you have better instructions
