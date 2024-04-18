@@ -1,105 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ recipe['_source']['name'] }}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script type="text/javascript" src="{{url_for('static',filename='script/script.js')}}"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script
+      type="text/javascript"
+      src="{{url_for('static',filename='script/script.js')}}"
+    ></script>
     <script src="{{url_for('static', filename='/script/results.js')}}"></script>
     <script src="{{url_for('static', filename='/script/recipe.js')}}"></script>
-    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
-
-    <style>
-      body {
-        background-color: #f0f8ff; /* Light blue background color */
-        text-align: center;
-      }
-
-      .container {
-        border: 2px solid #add8e6; /* Light blue border color */
-        padding: 20px;
-        margin-top: 30px;
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .jumbotron{
-        background-color: #f0f8ff;
-      }
-
-    </style>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='css/main.css')}}"
+    />
+    <style></style>
   </head>
   <body>
     {% include 'navbar.html' %}
-    <div class="container">
-      
-      <div class="jumbotron">
-          <h1 class="display-4"><strong>{{ recipe['_source']['name'] }}</strong></h1>
-          <p class="lead">
-            {% for tag in recipe['_source']['tags'] %}
-              {% if '-hours-or-less' in tag or '-minutes-or-less' in tag %}
-                Time: {{ tag }}
-              {% endif %}
-            {% endfor %}
-          </p>
-          <p class="lead">Serving Size: {{ recipe['_source']['serving_size'] }}</p>
-          {% if current_user.is_authenticated %}
-            {% if is_favorited %}
-              <button class="btn btn-danger favorite-btn" data-recipe-id="{{ recipe['_id'] }}">Unfavorite</button>
-            {% else %}
-              <button class="btn btn-primary favorite-btn" data-recipe-id="{{ recipe['_id'] }}">Favorite</button>
-            {% endif %}
-          {% endif %}
+    <div class="container module rounded mt-4 mb-4 p-3 border border-primary">
+      <div class="jumbotron white-module border border-primary">
+        <h1 class="display-4">
+          <strong>{{ recipe['_source']['name'] }}</strong>
+        </h1>
+        <p class="lead">
+          {% for tag in recipe['_source']['tags'] %} {% if '-hours-or-less' in
+          tag or '-minutes-or-less' in tag %} Time: {{ tag }} {% endif %} {%
+          endfor %}
+        </p>
+        <p class="lead">
+          Serving Size: {{ recipe['_source']['serving_size'] }}
+        </p>
+        {% if current_user.is_authenticated %} {% if is_favorited %}
+        <button
+          class="btn btn-danger favorite-btn"
+          data-recipe-id="{{ recipe['_id'] }}"
+        >
+          Unfavorite
+        </button>
+        {% else %}
+        <button
+          class="btn btn-primary favorite-btn"
+          data-recipe-id="{{ recipe['_id'] }}"
+        >
+          Favorite
+        </button>
+        {% endif %} {% endif %}
       </div>
-    
+
       <div class="row">
-          <div class="col-md-6">
-              <h2>Ingredients</h2>
-              <ul class="list-group">
-                  {% for ingredient in recipe['_source']['ingredients_raw_str'] %}
-                      <li class="list-group-item">{{ ingredient }}</li>
-                  {% endfor %}
-              </ul>
-          </div>
-          <div class="col-md-6">
-              <h2>Directions</h2>
-              <ol class="list-group">
-                  {% for step in recipe['_source']['steps'] %}
-                      <li class="list-group-item">{{ step }}</li>
-                  {% endfor %}
-              </ol>
-          </div>
+        <div class="col-md-6 border">
+          <h2>Ingredients</h2>
+          <ul class="list-group border border-primary">
+            {% for ingredient in recipe['_source']['ingredients_raw_str'] %}
+            <li class="list-group-item">{{ ingredient }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h2>Directions</h2>
+          <ol class="list-group border border-primary">
+            {% for step in recipe['_source']['steps'] %}
+            <li class="list-group-item">{{ step }}</li>
+            {% endfor %}
+          </ol>
+        </div>
       </div>
     </div>
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-      $(document).ready(function() {
-        $('.favorite-btn').click(function() {
-          var recipeId = $(this).attr('data-recipe-id');
-          var isFavorited = $(this).hasClass('btn-danger'); // Check if already favorited
-          var url = isFavorited ? '/recipe/' + recipeId + '/unfavorite' : '/recipe/' + recipeId + '/favorite';
-          
+      $(document).ready(function () {
+        $(".favorite-btn").click(function () {
+          var recipeId = $(this).attr("data-recipe-id");
+          var isFavorited = $(this).hasClass("btn-danger"); // Check if already favorited
+          var url = isFavorited
+            ? "/recipe/" + recipeId + "/unfavorite"
+            : "/recipe/" + recipeId + "/favorite";
+
           $.ajax({
-            type: 'POST',
+            type: "POST",
             url: url,
-            success: function(response) {
+            success: function (response) {
               if (isFavorited) {
-                alert('Recipe removed from favorites!');
+                alert("Recipe removed from favorites!");
               } else {
-                alert('Recipe added to favorites!');
+                alert("Recipe added to favorites!");
               }
               location.reload(); // Refresh the page after favoriting/unfavoriting
             },
-            error: function(xhr, status, error) {
-              alert('Error modifying favorites: ' + error);
-            }
+            error: function (xhr, status, error) {
+              alert("Error modifying favorites: " + error);
+            },
           });
         });
       });
     </script>
-    </body>
+  </body>
 </html>

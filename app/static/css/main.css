@@ -20,11 +20,6 @@ body {
   background: var(--secondary-clr);
 }
 
-.inner-module {
-  /* background: var(--primary-clr); */
-  background: white;
-}
-
 .white-module {
   background: white;
 }
