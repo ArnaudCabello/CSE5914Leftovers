@@ -28,13 +28,14 @@ class FavoriteRecipes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     recipe_id = db.Column(db.Integer, nullable=False)
+    recipe_name = db.Column(db.String(200))
     db.UniqueConstraint('user_id', 'recipe_id', name='unique_user_recipe')
 
     # Add recipe to favorites for a user
     @staticmethod
-    def add_favorite(user, recipe_id):
+    def add_favorite(user, recipe_id, recipe_name):
         try:
-            new_favorite = FavoriteRecipes(user_id=user.id, recipe_id=recipe_id)
+            new_favorite = FavoriteRecipes(user_id=user.id, recipe_id=recipe_id, recipe_name=recipe_name)
             db.session.add(new_favorite)
             db.session.commit()
             return True  # Success

@@ -91,20 +91,21 @@ def profile():
     return render_template('profile.html', favorited_recipes=favorited_recipes)
 
 # Add recipe to favorites
-@app.route('/recipe/<recipe_id>/favorite', methods=['POST'])
+@app.route('/recipe/<recipe_id>/favorite', methods=['GET', 'POST'])
 @login_required
 def add_favorite(recipe_id):
     recipe = es.get(index="recipe", id=recipe_id)
+    print(recipe)
     if recipe:
-        dbmodels.add_favorite(current_user, recipe['_id'])
+        dbmodels.FavoriteRecipes.add_favorite(current_user, recipe['_id'], recipe['_source']['name'])
     return redirect(url_for('profile'))
 
-@app.route('/recipe/<recipe_id>/unfavorite', methods=['POST'])
+@app.route('/recipe/<recipe_id>/unfavorite', methods=['GET', 'POST'])
 @login_required
 def remove_favorite(recipe_id):
     recipe = es.get(index="recipe", id=recipe_id)
     if recipe:
-        dbmodels.remove_favorite(current_user, recipe['_id'])
+        dbmodels.FavoriteRecipes.remove_favorite(current_user, recipe['_id'])
     return redirect(url_for('profile'))
 
 # Individual Recipe Pages

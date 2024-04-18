@@ -11,7 +11,7 @@
         <h2>Favorited Recipes</h2>
         <ul>
             {% for recipe in favorited_recipes %}
-                <li>{{ recipe.name }}</li>
+                <li><a href="{{ url_for('recipe', recipe_id=recipe.recipe_id) }}">{{ recipe.recipe_name }}</a></li>
             {% endfor %}
         </ul>
         <!-- Logout Button -->
