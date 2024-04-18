@@ -48,7 +48,10 @@ def register():
             new_user.set_hashed_password(password)
             db.session.add(new_user)
             db.session.commit()
-            return "Registration successful"
+
+            login_user(new_user)
+
+            return redirect(url_for('profile'))
         
     return render_template('register.html')
 
