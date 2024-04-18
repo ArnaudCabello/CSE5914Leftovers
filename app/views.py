@@ -54,11 +54,14 @@ def register():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+        #username = request.form['username']
 
         existing = dbmodels.User.query.filter_by(email=email).first()
         # If the user exists, prompt for another, otherwise create
         if existing:
-            return "Username already exists"
+            return "This email address is already linked to an account."
+        #elif dbmodels.User.query.filter_by(username=username).first():
+            #return "Username already exists. Please choose another."
         else: 
             new_user = dbmodels.User(email=email)
             new_user.set_hashed_password(password)

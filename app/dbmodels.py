@@ -9,7 +9,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(120), nullable=False)
-
+    #username = db.Column(db.String(64), unique=True, nullable=False)
     favorites = relationship('FavoriteRecipes', backref='user', lazy=True)
 
     def set_hashed_password(self, password):
