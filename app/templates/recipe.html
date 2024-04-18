@@ -44,10 +44,12 @@
             {% endfor %}
           </p>
           <p class="lead">Serving Size: {{ recipe['_source']['serving_size'] }}</p>
-          {% if is_favorited %}
-            <button class="btn btn-danger favorite-btn" data-recipe-id="{{ recipe['_id'] }}">Unfavorite</button>
-          {% else %}
-            <button class="btn btn-primary favorite-btn" data-recipe-id="{{ recipe['_id'] }}">Favorite</button>
+          {% if current_user.is_authenticated %}
+            {% if is_favorited %}
+              <button class="btn btn-danger favorite-btn" data-recipe-id="{{ recipe['_id'] }}">Unfavorite</button>
+            {% else %}
+              <button class="btn btn-primary favorite-btn" data-recipe-id="{{ recipe['_id'] }}">Favorite</button>
+            {% endif %}
           {% endif %}
       </div>
     
