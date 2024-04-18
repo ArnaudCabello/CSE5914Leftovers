@@ -1,44 +1,30 @@
-/* main.css */
-
-.nav-container {
-  margin: auto;
+/* main.css for global classes */
+:root {
+  --primary-clr: #f9f7f7;
+  --secondary-clr: rgb(213, 221, 231);
+  --accent-clr: #3f72af;
+  --accent2-clr: #112d4e;
+  --txt-blue: #3f72af;
 }
 
 body {
-  margin: 0;
-  padding: 0;
+  text-align: center;
+  background: var(--primary-clr);
 }
 
 .container {
-  border: 2px solid yellow;
-  border-radius: 20px;
-  margin-left: 20px;
+  min-height: 50vh;
 }
 
-.hor-container {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
+.module {
+  background: var(--secondary-clr);
 }
 
-.vert-container {
-  display: flex;
-  flex-direction: column;
-  border: 2px solid rgb(173, 181, 220);
-  width: 100vh;
-  height: 100vh;
-  margin: 50px 0px;
-  padding: 10px;
-  border-radius: 20px;
+.inner-module {
+  /* background: var(--primary-clr); */
+  background: white;
 }
 
-.banner {
-  background-color: #667fbf; /* Blue color for the banner */
-  color: #fff; /* White text color for better contrast */
-  padding: 20px;
-  text-align: center;
-}
-
-.button {
-  background-color: #fff;
+.white-module {
+  background: white;
 }

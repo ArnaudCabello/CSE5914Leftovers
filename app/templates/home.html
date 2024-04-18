@@ -18,153 +18,161 @@
       type="text/javascript"
       src="{{url_for('static',filename='script/script.js')}}"
     ></script>
-    <style>
-      body {
-        background-color: #f0f8ff; /* Light blue background color */
-        text-align: center;
-      }
-
-      .container {
-        border: 2px solid #add8e6; /* Light blue border color */
-        padding: 20px;
-        margin-top: 30px;
-        width: 50%;
-        height: 700px;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 20px;
-      }
-
-      #ingredients,
-      #recipe {
-        width: 80%;
-        margin-top: 10px;
-      }
-
-      button {
-        margin: 20px;
-      }
-    </style>
   </head>
   <body>
-    <div class="container" id="content">
+    <div class="min-vh-100" id="content">
       {% include 'navbar.html' %}
       <!-- Header -->
-      <h2>What's in your fridge?</h2>
-      <!-- Input space for ingredients -->
-      <input
-        type="text"
-        placeholder="Enter Ingredients..."
-        id="ingredients"
-        name="ingredients"
-        required
-        onkeyup="addIngredient(event)"
-      />
-      <!-- Button to clear all ingredients -->
-      <button type="button" onclick="clearIngredients()">
-        Clear All Ingredients
-      </button>
 
-      <!-- Button to generate recipes -->
-      <button type="button" onclick="generateRecipes()">
-        Generate Recipes
-      </button>
+      <!-- Main container under navbar -->
+      <div
+        class="container module d-flex flex-column mt-5 p-5 border border-primary rounded"
+      >
+        <h2>What's in your fridge?</h2>
+        <h4>
+          Enter ingredients in the searchbar. Try "tomato", "egg", or "chicken"!
+        </h4>
 
-      <div class="mt-3">
-        <label class="form-check-label me-3" style="margin-bottom: 10px">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            id="glutenFreeCheckbox"
-          />
-          Gluten Free
+        <div class="d-flex flex-row justify-content-around">
+          <!-- Input space for ingredients -->
+
+          <label class="w-50">
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Try 'tomato'"
+              id="ingredients"
+              name="ingredients"
+              required
+              onkeyup="addIngredient(event)"
+            />
+          </label>
+          <!-- Button to add ingredient to list -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="addIngredient(event)"
+          >
+            Add Ingredient
+          </button>
+          <!-- Button to clear all ingredients -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="clearIngredients()"
+          >
+            Clear All Ingredients
+          </button>
+
+          <!-- Button to generate recipes -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="generateRecipes()"
+          >
+            Generate Recipes
+          </button>
+        </div>
+
+        <div class="mt-3">
+          <label class="form-check-label me-3" style="margin-bottom: 10px">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="glutenFreeCheckbox"
+            />
+            Gluten Free
+          </label>
+          <label class="form-check-label me-3" style="margin-bottom: 10px">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="dairyFreeCheckbox"
+            />
+            Dairy Free
+          </label>
+          <label class="form-check-label me-3" style="margin-bottom: 10px">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="vegetarianCheckbox"
+            />
+            Vegetarian
+          </label>
+          <label class="form-check-label me-3" style="margin-bottom: 10px">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="veganCheckbox"
+            />
+            Vegan
+          </label>
+          <label class="form-check-label me-3" style="margin-bottom: 10px">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="kosherCheckbox"
+            />
+            Kosher
+          </label>
+          <label class="form-check-label me-3" style="margin-bottom: 10px">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="lowCalCheckbox"
+            />
+            Low Calorie
+          </label>
+          <label class="form-check-label me-3" style="margin-bottom: 10px">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="lowCarbCheckbox"
+            />
+            Low Carb
+          </label>
+          <label class="form-check-label me-3" style="margin-bottom: 10px">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="lowFatCheckbox"
+            />
+            Low Fat
+          </label>
+          <label class="form-check-label me-3" style="margin-bottom: 10px">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="lowSodiumCheckbox"
+            />
+            Low Sodium
+          </label>
+          <label class="form-check-label me-3" style="margin-bottom: 10px">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="lowCholesterolCheckbox"
+            />
+            Low Cholesterol
+          </label>
+          <label class="form-check-label" style="margin-bottom: 10px">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="highProteinCheckbox"
+            />
+            High Protein
+          </label>
+        </div>
+
+        <!-- Display entered ingredients here -->
+        <label class="d-flex justify-content-start"
+          ><h3>Ingredients</h3>
         </label>
-        <label class="form-check-label me-3" style="margin-bottom: 10px">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            id="dairyFreeCheckbox"
-          />
-          Dairy Free
-        </label>
-      </label>
-      <label class="form-check-label me-3" style="margin-bottom: 10px">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          id="vegetarianCheckbox"
-        />
-        Vegetarian
-      </label>
-    </label>
-    <label class="form-check-label me-3" style="margin-bottom: 10px">
-      <input
-        type="checkbox"
-        class="form-check-input"
-        id="veganCheckbox"
-      />
-      Vegan
-    </label>
-    <label class="form-check-label me-3" style="margin-bottom: 10px">
-      <input
-        type="checkbox"
-        class="form-check-input"
-        id="kosherCheckbox"
-      />
-      Kosher
-    </label>
-    <label class="form-check-label me-3" style="margin-bottom: 10px">
-      <input
-        type="checkbox"
-        class="form-check-input"
-        id="lowCalCheckbox"
-      />
-      Low Calorie
-    </label>
-    <label class="form-check-label me-3" style="margin-bottom: 10px">
-      <input
-        type="checkbox"
-        class="form-check-input"
-        id="lowCarbCheckbox"
-      />
-      Low Carb
-    </label>
-    <label class="form-check-label me-3" style="margin-bottom: 10px">
-      <input
-        type="checkbox"
-        class="form-check-input"
-        id="lowFatCheckbox"
-      />
-      Low Fat
-    </label>
-    <label class="form-check-label me-3" style="margin-bottom: 10px">
-      <input
-        type="checkbox"
-        class="form-check-input"
-        id="lowSodiumCheckbox"
-      />
-      Low Sodium
-    </label>
-    <label class="form-check-label me-3" style="margin-bottom: 10px">
-      <input
-        type="checkbox"
-        class="form-check-input"
-        id="lowCholesterolCheckbox"
-      />
-      Low Cholesterol
-    </label>
-    <label class="form-check-label" style="margin-bottom: 10px">
-      <input
-        type="checkbox"
-        class="form-check-input"
-        id="highProteinCheckbox"
-      />
-      High Protein
-    </label>
+        <div class="container bg-white border border-primary rounded">
+          <ul class="list-group" id="ingredients-list"></ul>
+        </div>
       </div>
-
-      <!-- Display entered ingredients here -->
-      <ul class="list-group" id="ingredients-list"></ul>
     </div>
   </body>
 </html>
