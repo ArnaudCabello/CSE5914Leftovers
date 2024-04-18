@@ -1,7 +1,5 @@
 // script.js
 var ingredients = new Array();
-var glutenFreeSelected = false; // Boolean value for gluten-free selection
-var dairyFreeSelected = false; // Boolean value for dairy-free selection
 
 function addIngredient(event) {
     if (event.key === 'Enter') {
@@ -43,15 +41,24 @@ function clearIngredients() {
 
 function generateRecipes() {
     // You can redirect to the results page here
-    // Check if gluten-free checkbox is selected
-    glutenFreeSelected = document.getElementById('glutenFreeCheckbox').checked;
-    // Check if dairy-free checkbox is selected
-    dairyFreeSelected = document.getElementById('dairyFreeCheckbox').checked;
+    var filters = new Array();
+    if(document.getElementById('glutenFreeCheckbox').checked){
+        filters.push("gluten-free")
+    }
+    if(document.getElementById('dairyFreeCheckbox').checked){
+        filters.push("dairy-free")
+    }
 
     var rootPath = '/results';
     var query = '?q=';
     var ingredientsList = ingredients.join("_");
-    window.location.href=rootPath.concat(query).concat(ingredientsList)
+    if(filters.length > 0){
+        var filter = "&filter="
+        var filterList = filters.join("_")
+        window.location.href=rootPath.concat(query).concat(ingredientsList).concat(filter).concat(filterList)
+    } else{
+        window.location.href=rootPath.concat(query).concat(ingredientsList)
+    }
 }
 
 function incPage(page){

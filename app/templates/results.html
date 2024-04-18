@@ -98,8 +98,9 @@
             if (currentPage > 0) {
               var newPage = currentPage + 1;
               var ingr = '{{ingredients | join("_") }}';
+              var filt = '{{filters | join("_") }}';
               window.location.href =
-                "/results?q=" + encodeURI(ingr) + "&page=" + newPage;
+                "/results?q=" + encodeURI(ingr) + "&filter=" + encodeURI(filt) + "&page=" + newPage;
             }
           });
 
@@ -110,8 +111,9 @@
             var currentPage = parseInt("{{ page }}") || 0;
             var newPage = currentPage - 1;
             var ingredients = '{{ ingredients | join("_") }}';
+            var filt = '{{filters | join("_") }}';
             window.location.href =
-              "/results?q=" + encodeURI(ingredients) + "&page=" + newPage;
+              "/results?q=" + encodeURI(ingredients) + "&filter=" + encodeURI(filt) + "&page=" + newPage;
           });
       });
     </script>
