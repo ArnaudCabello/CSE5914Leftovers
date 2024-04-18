@@ -20,6 +20,7 @@ def results():
     page = int(request.args.get("page", 1))
     query = request.args["q"].lower()
     tokens = query.split('_')
+    data=[]
     shouldTerms = [{"term": {"ingredients": token}} for token in tokens]
     if(filter is None or filter == ""):
         tags = list()
