@@ -26,9 +26,9 @@ def results():
     else:
         tags = filter.split('_')
     filterTerms = [{"term": {"tags.keyword": tag}} for tag in tags]
-    res = es.search (index="recipe", body={"query": {"bool": {"should": shouldTerms, "filter": filterTerms}}})
+    res = es.search (size=100, index="recipe", body={"query": {"bool": {"should": shouldTerms, "filter": filterTerms}}})
     data = res["hits"]["hits"]
-    
+
     indexedData = np.zeros((100, 2))
 
     # include the percent of ingredients matching in the data
