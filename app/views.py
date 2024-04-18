@@ -111,9 +111,12 @@ def remove_favorite(recipe_id):
 # Individual Recipe Pages
 @app.route('/recipe/<recipe_id>')
 def recipe(recipe_id):
+
+    is_favorited = dbmodels.check_if_favorited(current_user, recipe_id)
+
     # Your logic to retrieve a specific recipe by its ID
     recipe_details = es.get(index="recipe", id=recipe_id)
-    return render_template('recipe.html', recipe=recipe_details)
+    return render_template('recipe.html', recipe=recipe_details, is_favorited = is_favorited)
 
 
 # TODO: Delete this when you have better instructions

@@ -2,6 +2,7 @@ from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import validates, relationship
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import UniqueConstraint
 from flask_login import UserMixin
 
 class User(UserMixin, db.Model):
@@ -29,7 +30,9 @@ class FavoriteRecipes(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     recipe_id = db.Column(db.Integer, nullable=False)
     recipe_name = db.Column(db.String(200))
-    db.UniqueConstraint('user_id', 'recipe_id', name='unique_user_recipe')
+    __table_args__ = (
+        UniqueConstraint('user_id', 'recipe_id', name='unique_user_recipe'),
+    )
 
     # Add recipe to favorites for a user
     @staticmethod
@@ -62,3 +65,14 @@ def get_favorited_recipes(user_id):
         return favorited_recipes
     else:
         return None  # User not found
+    
+def check_if_favorited(current_user, recipe_id):
+    if not current_user.is_authenticated:
+        return False
+    # Check if the recipe is favorited by the current user
+    favorited_recipe = FavoriteRecipes.query.filter_by(user_id=current_user.id, recipe_id=recipe_id).first()
+    
+    if favorited_recipe:
+        return True
+    else:
+        return False

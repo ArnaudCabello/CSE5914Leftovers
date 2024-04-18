@@ -1,0 +1,63 @@
+/* Profile.css */
+
+/* Set background color */
+body {
+    background-color: #f9f7f7;
+  }
+  
+  /* Container styles */
+  .container {
+    margin-top: 50px;
+    padding: 30px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+/* Header styles */
+h2 {
+font-size: 24px;
+font-weight: bold;
+margin-bottom: 20px;
+}
+
+/* Form label styles */
+label {
+font-size: 16px;
+}
+
+/* Input and button styles */
+.form-control {
+margin-bottom: 10px;
+}
+
+.btn-primary {
+margin-right: 10px;
+}
+
+/* Checkbox styles */
+.form-check-label {
+margin-right: 20px;
+}
+
+/* List item styles */
+ul {
+list-style-type: none;
+padding: 0;
+}
+
+li {
+margin-bottom: 10px;
+}
+
+/* Logout button styles */
+.logout-btn {
+margin-top: 20px;
+}
+
+/* Responsive styles */
+@media (max-width: 576px) {
+.container {
+    padding: 20px;
+}
+}
