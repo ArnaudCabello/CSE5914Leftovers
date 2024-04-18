@@ -102,7 +102,7 @@
           .addEventListener("click", function (e) {
             e.preventDefault();
             var currentPage = parseInt("{{ page }}") || 0;
-            if (currentPage > 0) {
+            if (currentPage > 0 && currentPage < 9) {
               var newPage = currentPage + 1;
               var ingr = '{{ingredients | join("_") }}';
               var filt = '{{filters | join("_") }}';
@@ -110,6 +110,12 @@
                 "/results?q=" + encodeURI(ingr) + "&filter=" + encodeURI(filt) + "&page=" + newPage;
             }
           });
+
+                // Disable previous button if current page is 1
+        var currentPage = parseInt("{{ page }}") || 0;
+        if (currentPage === 9) {
+          document.getElementById("inc-page").disabled = true;
+        }
 
         document
           .getElementById("dec-page")
