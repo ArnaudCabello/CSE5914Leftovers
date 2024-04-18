@@ -20,7 +20,11 @@ def results():
     query = request.args["q"].lower()
     tokens = query.split('_')
     shouldTerms = [{"term": {"ingredients": token}} for token in tokens]
-    res = es.search (index="recipe", body={"query": {"bool": {"should": shouldTerms}}})
+    tags = list()
+    # tags.append("vegan")
+    # tags.append("5-ingredients-or-less")
+    filterTerms = [{"term": {"tags.keyword": tag}} for tag in tags]
+    res = es.search (index="recipe", body={"query": {"bool": {"should": shouldTerms, "filter": filterTerms}}})
     data = res["hits"]["hits"]
     start_index = (page - 1) * 10
     end_index = start_index + 10
